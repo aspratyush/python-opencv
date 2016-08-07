@@ -17,6 +17,7 @@ class Contours(CImage.Image):
         # Create mask
         nMaxVal = 255;
         retVal, imgMask = cv2.threshold( imgGray, threshold, nMaxVal, thresholdType )
+        imgMaskCopy = imgMask.copy()
 
         # find contours
         contours, hierarchy = cv2.findContours( imgMask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE )
@@ -25,7 +26,8 @@ class Contours(CImage.Image):
         cv2.drawContours( self.image, contours, -1, (255, 0, 0), 2 )
 
         #plot
-        plt.imshow( self.image )
+        plt.subplot(211), plt.imshow( imgMaskCopy, cmap='gray' ), plt.title('Mask')
+        plt.subplot(212), plt.imshow( self.image )
         plt.title("Contour over the required region")
         plt.show()
 
